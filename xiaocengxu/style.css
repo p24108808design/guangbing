@@ -259,6 +259,7 @@ input, textarea { font-family: var(--f); }
 .prod-badge.hot { background: rgba(220,60,60,.92); }
 .prod-badge.new { background: rgba(232,132,156,.92); }
 .prod-badge.spicy { background: rgba(200,80,60,.92); }
+.prod-badge.herby { background: rgba(76,140,80,.92); }
 .prod-prep-time {
   position: absolute; bottom: 8px; right: 8px;
   font-size: 10.5px; font-weight: 500;
@@ -310,6 +311,7 @@ input, textarea { font-family: var(--f); }
 }
 .tag-p.tag-pink { background: var(--pink-soft); color: var(--pink-deep); }
 .tag-p.tag-spicy { background: #FEF3EF; color: #D84838; }
+.tag-p.tag-herby { background: #EEF7EE; color: #3A7D44; }
 
 /* 加购按钮 —— 黑色圆形（喜茶同款） */
 .add-circle {
