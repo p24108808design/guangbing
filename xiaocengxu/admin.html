@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>订单管理 · 光饼·舒芙蕾·油柑茶</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+      background: #FFFAFB;
+      padding: 14px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .header {
+      background: linear-gradient(135deg, #F098B5 0%, #E8849C 35%, #D86A8A 70%, #C85A78 100%);
+      color: white;
+      padding: 20px 16px;
+      border-radius: 16px;
+      margin-bottom: 14px;
+    }
+    .header h1 { font-size: 19px; }
+    .header p { font-size: 12.5px; opacity:0.85; margin-top:4px; letter-spacing:1px;}
+    .stats {
+      display:flex; gap:8px; margin-bottom:14px;
+    }
+    .stat-card {
+      flex:1; background:white; border-radius:12px;padding:13px 10px;
+      text-align:center; box-shadow:0 2px 8px rgba(232,132,156,0.06);
+    }
+    .stat-num{font-size:23px;font-weight:700;color:#E8849C}
+    .stat-label{font-size:11.5px;color:#8B8088;margin-top:2px}
+    .filter-bar{display:flex;gap:7px;margin-bottom:11px;overflow-x:auto}
+    .filter-btn{
+      flex-shrink:0;padding:6px 14px;border-radius:16px;border:1.5px solid #EDE4E7;
+      background:white;font-size:12px;cursor:pointer;font-weight:500;color:#8B8088
+    }
+    .filter-btn.active{background:#E8849C;color:white;border-color:#E8849C;font-weight:600}
+
+    .order-card{
+      background:white;border-radius:14px;padding:14px;margin-bottom:9px;
+      box-shadow:0 2px 8px rgba(232,132,156,0.05);
+    }
+    .order-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+    .order-id{font-size:12.5px;font-weight:700;color:#E8849C}
+    .order-status{
+      font-size:10.5px;padding:2px 8px;border-radius:8px;font-weight:600;
+    }
+    .status-pending{background:#FFF0F3;color:#C85A78}
+    .status-done{background:#FFE8ED;color:#B04464}
+    .order-customer{font-size:14px;font-weight:600;margin-bottom:1px}
+    .order-phone{font-size:12px;color:#8B8088}
+    .order-items{
+      background:#FFF0F3;border-radius:8px;padding:8px 10px;margin:7px 0;font-size:11.5px;line-height:1.8;
+    }
+    .order-meta{display:flex;justify-content:space-between;font-size:11.5px;color:#8B8088;margin-top:5px}
+    .order-total{font-weight:700;color:#E55555;font-size:13.5px}
+    .order-actions{display:flex;gap:8px;margin-top:9px}
+    .btn-done{
+      flex:1;padding:8px;border-radius:8px;border:none;background:linear-gradient(135deg,#E8849C,#C85A78);color:white;
+      font-size:12.5px;font-weight:600;cursor:pointer
+    }
+    .btn-del{
+      padding:8px 13px;border-radius:8px;border:1.5px solid #EDE4E7;background:white;
+      font-size:12.5px;cursor:pointer;color:#8B8088
+    }
+    .empty{text-align:center;padding:36px 0;color:#C4BCB2;font-size:13.5px}
+    .clear-all{
+      width:100%;padding:10px;border-radius:10px;border:1.5px solid #EDE4E7;
+      background:white;color:#8B8088;font-size:12.5px;cursor:pointer;margin-top:12px
+    }
+    .refresh-hint{text-align:center;font-size:11px;color:#C4BCB2;margin-top:8px}
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📋 订单管理</h1>
+  <p>☁️ 光饼·舒芙蕾·油柑茶 · 曼贺纳集市</p>
+</div>
+
+<div class="stats">
+  <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-label">全部订单</div></div>
+  <div class="stat-card"><div class="stat-num" id="statPending">0</div><div class="stat-label">待处理</div></div>
+  <div class="stat-card"><div class="stat-num" id="statRevenue">¥0</div><div class="stat-label">已收营收</div></div>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="filterOrders('all',this)">全部</button>
+  <button class="filter-btn" onclick="filterOrders('pending',this)">待处理</button>
+  <button class="filter-btn" onclick="filterOrders('done',this)">已完成</button>
+</div>
+
+<div id="orderList"></div>
+<button class="clear-all" onclick="clearAll()">🗑️ 清空所有订单记录</button>
+<p class="refresh-hint">每30秒自动刷新 · 数据存储于本设备</p>
+
+<script>
+let allOrders=[],currentFilter='all';
+function loadOrders(){
+  allOrders=JSON.parse(localStorage.getItem('mhn_orders')||'[]');
+  allOrders=allOrders.map(o=>({...o,status:o.status||'pending'}));
+  renderOrders();updateStats();
+}
+function renderOrders(){
+  const list=document.getElementById('orderList');
+  let filtered=allOrders;
+  if(currentFilter==='pending')filtered=allOrders.filter(o=>o.status==='pending');
+  if(currentFilter==='done')filtered=allOrders.filter(o=>o.status==='done');
+  if(filtered.length===0){list.innerHTML='<div class="empty">暂无订单</div>';return;}
+  list.innerHTML=[...filtered].reverse().map(order=>`
+    <div class="order-card">
+      <div class="order-top">
+        <span class="order-id">${order.orderId}</span>
+        <span class="order-status ${order.status==='done'?'status-done':'status-pending'}">${order.status==='done'?'✅ 已完成':'⏳ 待处理'}</span>
+      </div>
+      <div class="order-customer">👤 ${order.name}</div>
+      <div class="order-phone">📱 ${order.phone}</div>
+      <div class="order-items">
+        ${order.items.map(i=>'▪ '+i.name+'（'+i.spec+'）×'+i.qty+'　¥'+(i.price*i.qty)).join('<br>')}
+      </div>
+      <div class="order-meta">
+        <span>📅 ${order.date} ${order.time}</span>
+        <span class="order-total">合计 ¥${order.total}</span>
+      </div>
+      ${order.note?'<div style="font-size:11.5px;color:#8B8378;margin-top:6px;">💬 '+order.note+'</div>':''}
+      <div class="order-actions">
+        ${order.status!=='done'?'<button class="btn-done" onclick="markDone(\''+order.orderId+'\')">✅ 标记完成</button>':''}
+        <button class="btn-del" onclick="deleteOrder(\''+order.orderId+'\')">删除</button>
+      </div>
+    </div>`).join('');
+}
+function updateStats(){
+  document.getElementById('statTotal').textContent=allOrders.length;
+  document.getElementById('statPending').textContent=allOrders.filter(o=>o.status==='pending').length;
+  const revenue=allOrders.filter(o=>o.status==='done').reduce((s,o)=>s+o.total,0);
+  document.getElementById('statRevenue').textContent='¥'+revenue;
+}
+function filterOrders(type,btn){
+  currentFilter:type;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');renderOrders();
+}
+function markDone(id){
+  allOrders=allOrders.map(o=>o.orderId===id?{...o,status:'done'}:o);
+  localStorage.setItem('mhn_orders',JSON.stringify(allOrders));renderOrders();updateStats();
+}
+function deleteOrder(id){
+  if(!confirm('确定删除此订单？'))return;
+  allOrders=allOrders.filter(o=>o.orderId!==id);
+  localStorage.setItem('mhn_orders',JSON.stringify(allOrders));renderOrders();updateStats();
+}
+function clearAll(){
+  if(!confirm('确定清空所有订单？此操作不可恢复！'))return;
+  localStorage.removeItem('mhn_orders');loadOrders();
+}
+loadOrders();
+setInterval(loadOrders,30000);
+</script>
+</body>
+</html>

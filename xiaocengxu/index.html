@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>光饼·舒芙蕾·油柑茶</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== 启动画面：LOGO居中 ===== -->
+  <div class="splash" id="splash">
+    <div class="splash-inner">
+      <div class="splash-logo-wrap">
+        <img src="mascot.jpg" alt="光饼" class="splash-logo-img">
+      </div>
+      <p class="splash-brand">光饼·舒芙蕾·油柑茶</p>
+      <p class="splash-slogan">手作时光 · 自然好食材</p>
+      <div class="splash-loading"><div class="splash-bar"></div></div>
+    </div>
+  </div>
+
+  <!-- ===== 主容器 ===== -->
+  <div class="app" id="app">
+
+    <!-- 顶部导航：LOGO + 购物车 -->
+    <header class="top-bar" id="topBar">
+      <div class="top-bar-left">
+        <img src="mascot.jpg" alt="" class="top-bar-logo">
+        <span class="top-bar-brand">光饼·舒芙蕾·油柑茶</span>
+      </div>
+      <button class="top-bar-btn" onclick="toggleCart()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </header>
+
+    <!-- 英雄区：LOGO + 品牌信息 + 粉色渐变背景 -->
+    <section class="hero" id="hero">
+      <div class="hero-inner">
+        <div class="hero-logo-wrap">
+          <img src="mascot.jpg" alt="光饼IP形象" class="hero-logo-img">
+        </div>
+        <h1 class="hero-title">光饼·舒芙蕾·油柑茶</h1>
+        <p class="hero-subtitle">手作时光 · 自然好食材</p>
+        <p class="hero-tagline">HANDMADE & NATURAL</p>
+        <div class="hero-info-row">
+          <span class="hero-info-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            西双版纳·曼贺纳集市
+          </span>
+          <span class="hero-divider"></span>
+          <span class="hero-info-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            09:00-20:00
+          </span>
+        </div>
+      </div>
+      <div class="hero-wave">
+        <svg viewBox="0 0 400 30" preserveAspectRatio="none"><path d="M0 15 C80 0,160 30,250 15 S370 0,400 15 L400 30 L0 30 Z" fill="#F8F7F4"/></svg>
+      </div>
+    </section>
+
+    <!-- 制作时间提示条 -->
+    <div class="time-strip">
+      <div class="time-strip-scroll">
+        <span class="time-chip"><b>☁️ 舒芙蕾</b> 约15-20分钟</span>
+        <span class="time-chip"><b>🧀 榴莲饼</b> 约20-25分钟</span>
+        <span class="time-chip"><b>🫓 光饼/锅盔</b> 约25-30分钟</span>
+        <span class="time-chip"><b>🥤 油柑饮</b> 约3-5分钟</span>
+      </div>
+      <span class="time-tip">建议提前预约 · 到店即取</span>
+    </div>
+
+    <!-- 分类导航 -->
+    <nav class="cat-nav" id="catPills">
+      <button class="cat-pill active" data-cat="all" onclick="filterCat('all',this)">全部</button>
+      <button class="cat-pill" data-cat="featured" onclick="filterCat('featured',this)">招牌</button>
+      <button class="cat-pill" data-cat="souffle" onclick="filterCat('souffle',this)">舒芙蕾</button>
+      <button class="cat-pill" data-cat="guangbing" onclick="filterCat('guangbing',this)">光饼</button>
+      <button class="cat-pill" data-cat="guokui" onclick="filterCat('guokui',this)">锅盔</button>
+      <button class="cat-pill" data-cat="drink" onclick="filterCat('drink',this)">油柑饮</button>
+      <button class="cat-pill" data-cat="combo" onclick="filterCat('combo',this)">套餐</button>
+    </nav>
+
+    <!-- 产品列表 -->
+    <main class="product-list" id="feed">
+
+      <!-- 招牌：榴莲芝士饼 -->
+      <article class="prod-card featured-card" data-cat="featured">
+        <div class="prod-img-box">
+          <img src="images/img-durian-cheese.jpg" alt="榴莲芝士饼" loading="lazy" class="prod-img">
+          <span class="prod-badge hot">爆款</span>
+          <span class="prod-prep-time">约20-25min</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-head">
+            <h2 class="prod-name">榴莲芝士饼</h2>
+            <span class="prod-price">¥28<small>/8寸</small></span>
+          </div>
+          <p class="prod-desc">精选金枕头榴莲+马苏里拉芝士，外酥内软，每一口都拉丝</p>
+          <div class="prod-foot">
+            <div class="prod-tags"><span class="tag-p">手工现烤</span><span class="tag-p tag-highlight">招牌</span></div>
+            <button class="add-circle" onclick="event.stopPropagation();addToCart('榴莲芝士饼(8寸)','¥28',28,'images/img-durian-cheese.jpg')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 招牌：抹茶榴莲芝士饼 -->
+      <article class="prod-card" data-cat="featured">
+        <div class="prod-img-box">
+          <img src="images/img-matcha-durian.jpg" alt="抹茶榴莲芝士饼" loading="lazy" class="prod-img">
+          <span class="prod-badge new">新品</span>
+          <span class="prod-prep-time">约20-25min</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-head">
+            <h2 class="prod-name">抹茶榴莲芝士饼</h2>
+            <span class="prod-price">¥29<small>/8寸</small></span>
+          </div>
+          <p class="prod-desc">宇治抹茶粉+榴莲+芝士，清新不腻，颜值与味道双在线</p>
+          <div class="prod-foot">
+            <div class="prod-tags"><span class="tag-p tag-pink">新品</span></div>
+            <button class="add-circle" onclick="event.stopPropagation();addToCart('抹茶榴莲芝士饼(8寸)','¥29',29,'images/img-matcha-durian.jpg')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 舒芙蕾：原味 -->
+      <article class="prod-card" data-cat="souffle">
+        <div class="prod-img-box">
+          <img src="images/img-vanilla-souffle.jpg" alt="原味舒芙蕾" loading="lazy" class="prod-img">
+          <span class="prod-badge new">新品</span>
+          <span class="prod-prep-time">约15-20min</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-head">
+            <h2 class="prod-name">原味舒芙蕾</h2>
+            <span class="prod-price">¥13<small>/份</small></span>
+          </div>
+          <p class="prod-desc">云朵般蓬松，经典原味，现做现吃最佳</p>
+          <div class="prod-foot">
+            <div class="prod-tags"><span class="tag-p">现做</span></div>
+            <button class="add-circle" onclick="event.stopPropagation();addToCart('原味舒芙蕾','¥13',13,'images/img-vanilla-souffle.jpg')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 舒芙蕾：抹茶青提 -->
+      <article class="prod-card" data-cat="souffle">
+        <div class="prod-img-box">
+          <img src="images/img-matcha-souffle.jpg" alt="抹茶青提舒芙蕾" loading="lazy" class="prod-img">
+          <span class="prod-prep-time">约15-20min</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-head">
+            <h2 class="prod-name">抹茶青提舒芙蕾</h2>
+            <span class="prod-price">¥18<small>/份</small></span>
+          </div>
+          <p class="prod-desc">清雅抹茶配新鲜青提，颜值超高</p>
+          <div class="prod-foot">
+            <div class="prod-tags"><span class="tag-p">人气</span></div>
+            <button class="add-circle" onclick="event.stopPropagation();addToCart('抹茶青提舒芙蕾','¥18',18,'images/img-matcha-souffle.jpg')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 舒芙蕾：巧克力奥利奥 -->
+      <article class="prod-card" data-cat="souffle">
+        <div class="prod-img-box">
+          <img src="images/img-choco-souffle.jpg" alt="巧克力奥利奥舒芙蕾" loading="lazy" class="prod-img">
+          <span class="prod-prep-time">约15-20min</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-head">
+            <h2 class="prod-name">巧克力奥利奥舒芙蕾</h2>
+            <span class="prod-price">¥15<small>/份</small></span>
+          </div>
+          <p class="prod-desc">浓郁巧克力+酥脆奥利奥，巧克力控必点</p>
+          <div class="prod-foot">
+            <div class="prod-tags"><span class="tag-p">巧克力</span></div>
+            <button class="add-circle" onclick="event.stopPropagation();addToCart('巧克力奥利奥舒芙蕾','¥15',15,'images/img-choco-souffle.jpg')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 舒芙蕾：草莓 -->
+      <article class="prod-card" data-cat="souffle">
+        <div class="prod-img-box">
+          <img src="images/img-strawberry-souffle.jpg" alt="草莓舒芙蕾" loading="lazy" class="prod-img">
+          <span class="prod-prep-time">约15-20min</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-head">
+            <h2 class="prod-name">草莓舒芙蕾</h2>
+            <span class="prod-price">¥18<small>/份</small></span>
+          </div>
+          <p class="prod-desc">酸甜草莓酱+奶油，少女心满满</p>
+          <div class="prod-foot">
+            <div class="prod-tags"><span class="tag-p">少女心</span></div>
+            <button class="add-circle" onclick="event.stopPropagation();addToCart('草莓舒芙蕾','¥18',18,'images/img-strawberry-souffle.jpg')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 舒芙蕾：黑糖珍珠 -->
+      <article class="prod-card" data-cat="souffle">
+        <div class="prod-img-box">
+          <img src="images/img-souffle-hero.jpg" alt="黑糖珍珠舒芙蕾" loading="lazy" class="prod-img">
+          <span class="prod-prep-time">约15-20min</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-head">
+            <h2 class="prod-name">黑糖珍珠舒芙蕾</h2>
+            <span class="prod-price">¥15<small>/份</small></span>
+          </div>
+          <p class="prod-desc">Q弹黑糖珍珠+松软舒芙蕾，双重口感</p>
+          <div class="prod-foot">
+            <div class="prod-tags"><span class="tag-p">黑糖</span></div>
+            <button class="add-circle" onclick="event.stopPropagation();addToCart('黑糖珍珠舒芙蕾','¥15',15,'images/img-souffle-hero.jpg')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 光饼：鲜肉韭菜 -->
+      <article class="prod-card" data-cat="guangbing">
+        <div class="prod-img-box">
+          <img src="images/img-guangbing.jpg" alt="鲜肉韭菜光饼" loading="lazy" class="prod-img">
+          <span class="prod-prep-time">约25-30min</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-head">
+            <h2 class="prod-name">鲜肉韭菜光饼</h2>
+            <span class="prod-price">¥3<small>/个</small></span>
+          </div>
+          <p class="prod-desc">传统炭火烤制，外脆内软，鲜肉韭菜馅</p>
+          <div class="prod-foot">
+            <div class="prod-tags"><span class="tag-p">炭火烤</span></div>
+            <button class="add-circle" onclick="event.stopPropagation();addToCart('鲜肉韭菜光饼','¥3',3,'images/img-guangbing.jpg')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 光饼：酸菜鲜肉 -->
+      <article class="prod-card" data-cat="guangbing">
+        <div class="prod-img-box">
+          <img src="images/img-guangbing.jpg" alt="酸菜鲜肉光饼" loading="lazy" class="prod-img">
+          <span class="prod-prep-time">约25-30min</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-head">
+            <h2 class="prod-name">酸菜鲜肉光饼</h2>
+            <span class="prod-price">¥3<small>/个</small></span>
+          </div>
+          <p class="prod-desc">酸菜提鲜，开胃解腻，炭火烤制</p>
+          <div class="prod-foot">
+            <div class="prod-tags"><span class="tag-p">开胃</span></div>
+            <button class="add-circle" onclick="event.stopPropagation();addToCart('酸菜鲜肉光饼','¥3',3,'images/img-guangbing.jpg')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 锅盔：香葱黑猪肉 -->
+      <article class="prod-card" data-cat="guokui">
+        <div class="prod-img-box">
+          <img src="images/img-guokui.jpg" alt="香葱黑猪肉锅盔" loading="lazy" class="prod-img">
+          <span class="prod-badge spicy">香辣</span>
+          <span class="prod-prep-time">约25-30min</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-head">
+            <h2 class="prod-name">香葱黑猪肉锅盔</h2>
+            <span class="prod-price">¥15<small>/份</small></span>
+          </div>
+          <p class="prod-desc">香葱配黑猪肉，越嚼越香，微辣</p>
+          <div class="prod-foot">
+            <div class="prod-tags"><span class="tag-p tag-spicy">香辣</span></div>
+            <button class="add-circle" onclick="event.stopPropagation();addToCart('香葱黑猪肉锅盔','¥15',15,'images/img-guokui.jpg')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 锅盔：梅干菜 -->
+      <article class="prod-card" data-cat="guokui">
+        <div class="prod-img-box">
+          <img src="images/img-guokui.jpg" alt="梅干菜锅盔" loading="lazy" class="prod-img">
+          <span class="prod-prep-time">约25-30min</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-head">
+            <h2 class="prod-name">梅干菜锅盔</h2>
+            <span class="prod-price">¥9<small>/份</small></span>
+          </div>
+          <p class="prod-desc">经典咸香味，下酒神器</p>
+          <div class="prod-foot">
+            <div class="prod-tags"><span class="tag-p">咸香</span></div>
+            <button class="add-circle" onclick="event.stopPropagation();addToCart('梅干菜锅盔','¥9',9,'images/img-guokui.jpg')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 锅盔：香菜鲜肉 -->
+      <article class="prod-card" data-cat="guokui">
+        <div class="prod-img-box">
+          <img src="images/img-guokui.jpg" alt="香菜鲜肉锅盔" loading="lazy" class="prod-img">
+          <span class="prod-badge spicy">香辣</span>
+          <span class="prod-prep-time">约25-30min</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-head">
+            <h2 class="prod-name">香菜鲜肉锅盔</h2>
+            <span class="prod-price">¥15<small>/份</small></span>
+          </div>
+          <p class="prod-desc">香菜爱好者福音，鲜肉馅，微辣</p>
+          <div class="prod-foot">
+            <div class="prod-tags"><span class="tag-p tag-spicy">香辣</span></div>
+            <button class="add-circle" onclick="event.stopPropagation();addToCart('香菜鲜肉锅盔','¥15',15,'images/img-guokui.jpg')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 油柑饮：原味 -->
+      <article class="prod-card" data-cat="drink">
+        <div class="prod-img-box">
+          <img src="images/img-yougan-drink.jpg" alt="原味油柑橄榄汁" loading="lazy" class="prod-img">
+          <span class="prod-prep-time">约3-5min</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-head">
+            <h2 class="prod-name">原味油柑橄榄汁</h2>
+            <span class="prod-price">¥15<small>/中杯</small></span>
+          </div>
+          <p class="prod-desc">现榨油柑+橄榄，维C爆棚，回甘清甜</p>
+          <div class="prod-foot">
+            <div class="prod-tags"><span class="tag-p">健康</span><span class="tag-p">现榨</span></div>
+            <button class="add-circle" onclick="event.stopPropagation();addToCart('原味油柑橄榄汁(中杯)','¥15',15,'images/img-yougan-drink.jpg')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 油柑饮：黄皮 -->
+      <article class="prod-card" data-cat="drink">
+        <div class="prod-img-box">
+          <img src="images/img-yougan-drink.jpg" alt="黄皮油柑汁" loading="lazy" class="prod-img">
+          <span class="prod-badge new">新品</span>
+          <span class="prod-prep-time">约3-5min</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-head">
+            <h2 class="prod-name">黄皮油柑汁</h2>
+            <span class="prod-price">¥15<small>/中杯</small></span>
+          </div>
+          <p class="prod-desc">黄皮果+油柑双重风味，酸爽过瘾</p>
+          <div class="prod-foot">
+            <div class="prod-tags"><span class="tag-p tag-pink">新品</span></div>
+            <button class="add-circle" onclick="event.stopPropagation();addToCart('黄皮油柑汁(中杯)','¥15',15,'images/img-yougan-drink.jpg')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 套餐：限定 -->
+      <article class="prod-card" data-cat="combo">
+        <div class="prod-img-box">
+          <img src="images/img-durian-cheese.jpg" alt="曼贺纳限定套餐" loading="lazy" class="prod-img">
+          <span class="prod-badge hot">限定</span>
+        </div>
+        <div class="prod-body">
+          <div class="prod-head">
+            <h2 class="prod-name">曼贺纳限定套餐</h2>
+            <div class="prod-price-row">
+              <span class="prod-price">¥52</span>
+              <span class="prod-price-old">¥61</span>
+            </div>
+          </div>
+          <p class="prod-desc">榴莲芝士饼(8寸) + 舒芙蕾1份 + 油柑汁(中杯)</p>
+          <div class="prod-foot">
+            <div class="prod-tags"><span class="tag-p">超值</span></div>
+            <button class="add-circle" onclick="event.stopPropagation();addToCart('曼贺纳限定套餐','¥52',52,'images/img-durian-cheese.jpg')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 套餐：双人 -->
+      <article class="prod-card" data-cat="combo">
+        <div class="prod-img-box">
+          <img src="images/img-durian-cheese2.jpg" alt="双人分享套餐" loading="lazy" class="prod-img">
+        </div>
+        <div class="prod-body">
+          <div class="prod-head">
+            <h2 class="prod-name">双人分享套餐</h2>
+            <div class="prod-price-row">
+              <span class="prod-price">¥88</span>
+              <span class="prod-price-old">¥108</span>
+            </div>
+          </div>
+          <p class="prod-desc">榴莲芝士饼(10寸)×1 + 光饼×4 + 油柑汁(大杯)×2</p>
+          <div class="prod-foot">
+            <div class="prod-tags"><span class="tag-p">分享</span></div>
+            <button class="add-circle" onclick="event.stopPropagation();addToCart('双人分享套餐','¥88',88,'images/img-durian-cheese2.jpg')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </button>
+          </div>
+        </div>
+      </article>
+
+    </main>
+
+    <div class="bottom-space"></div>
+  </div><!-- /app -->
+
+  <!-- 底部购物车栏 -->
+  <div class="cart-bar" id="cartBar" onclick="toggleCart()">
+    <div class="cart-bar-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="cart-bar-badge" id="cartBarBadge">0</span>
+    </div>
+    <div class="cart-bar-info">
+      <span class="cart-bar-hint">已选商品</span>
+      <span class="cart-bar-total" id="cartBarTotal">¥0</span>
+    </div>
+    <button class="cart-bar-go" onclick="event.stopPropagation();showBooking()">去结算</button>
+  </div>
+
+  <!-- 购物车浮层 -->
+  <div class="cart-mask" id="cartMask" onclick="toggleCart()"></div>
+  <div class="cart-sheet" id="cartSheet">
+    <div class="cart-sheet-handle"></div>
+    <div class="cart-sheet-header">
+      <h3>购物车</h3>
+      <button class="cart-sheet-clear" onclick="clearCart()" style="display:none;" id="clearCartBtn">清空</button>
+    </div>
+    <div class="cart-sheet-body" id="cartSheetBody">
+      <div class="cart-sheet-empty" id="cartSheetEmpty">
+        <p>购物车是空的</p>
+        <span>去选点好吃的吧~</span>
+      </div>
+    </div>
+    <div class="cart-sheet-footer" id="cartSheetFooter" style="display:none;">
+      <div class="cart-sheet-total">
+        <span>合计</span>
+        <strong id="cartSheetTotal">¥0</strong>
+      </div>
+      <button class="cart-sheet-checkout" onclick="showBooking()">去结算</button>
+    </div>
+  </div>
+
+  <!-- 预约弹窗 -->
+  <div class="modal-overlay" id="bookingModal">
+    <div class="modal-sheet">
+      <div class="modal-sheet-handle"></div>
+      <div class="modal-sheet-header">
+        <h3>预约下单</h3>
+        <button onclick="closeModal()">&#10005;</button>
+      </div>
+      <div class="modal-sheet-body">
+        <div class="order-summary" id="orderSummary"></div>
+        <div class="time-alert">
+          <b>制作时间提醒</b><br>
+          舒芙蕾15-20min · 榴莲饼20-25min · 光饼/锅盔25-30min<br>
+          建议提前预约，到店即取！
+        </div>
+        <div class="field">
+          <label>您的称呼 *</label>
+          <input type="text" id="customerName" placeholder="怎么称呼您？" maxlength="20">
+        </div>
+        <div class="field">
+          <label>手机号 *</label>
+          <input type="tel" id="customerPhone" placeholder="用于通知订单状态" maxlength="11">
+        </div>
+        <div class="field">
+          <label>预约日期 *</label>
+          <input type="date" id="bookingDate">
+        </div>
+        <div class="field">
+          <label>预约时段 *</label>
+          <div class="slot-grid">
+            <label class="slot-item"><input type="radio" name="timeSlot" value="09:00-10:00"><span>09:00-10:00</span></label>
+            <label class="slot-item"><input type="radio" name="timeSlot" value="10:00-11:00"><span>10:00-11:00</span></label>
+            <label class="slot-item"><input type="radio" name="timeSlot" value="11:00-12:00"><span>11:00-12:00</span></label>
+            <label class="slot-item"><input type="radio" name="timeSlot" value="12:00-13:00"><span>12:00-13:00</span></label>
+            <label class="slot-item"><input type="radio" name="timeSlot" value="13:00-14:00"><span>13:00-14:00</span></label>
+            <label class="slot-item"><input type="radio" name="timeSlot" value="17:00-18:00"><span>17:00-18:00</span></label>
+            <label class="slot-item"><input type="radio" name="timeSlot" value="18:00-19:00"><span>18:00-19:00</span></label>
+            <label class="slot-item"><input type="radio" name="timeSlot" value="19:00-20:00"><span>19:00-20:00</span></label>
+          </div>
+        </div>
+        <div class="field">
+          <label>备注</label>
+          <textarea id="bookingNote" placeholder="口味偏好、特殊要求..." rows="2" maxlength="100"></textarea>
+        </div>
+        <button class="btn-primary" onclick="submitOrder()">确认预约</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 成功弹窗 -->
+  <div class="modal-overlay" id="successModal">
+    <div class="modal-sheet success-sheet">
+      <div class="success-top">
+        <div class="success-avatar">
+          <img src="mascot.jpg" alt="">
+        </div>
+        <h3>预约成功!</h3>
+        <p class="success-id">订单号：<span id="successOrderId"></span></p>
+      </div>
+      <div class="success-flow">
+        <div class="flow-step"><em>1</em><span>复制订单信息</span></div>
+        <div class="flow-arrow"></div>
+        <div class="flow-step"><em>2</em><span>发微信给老板</span></div>
+        <div class="flow-arrow"></div>
+        <div class="flow-step"><em>3</em><span>到店扫码取货</span></div>
+      </div>
+      <button class="btn-copy" id="copyOrderBtn" onclick="copyOrderInfo()">复制订单信息发微信</button>
+      <div class="success-pay">
+        <p class="success-pay-label">到店出示此页面，扫码付款取货</p>
+        <img src="qrcode.jpg" alt="微信支付码" class="pay-qrcode" onerror="this.parentElement.style.display='none'">
+      </div>
+      <button class="btn-back" onclick="closeSuccess()">返回首页</button>
+    </div>
+  </div>
+
+  <!-- 飞入动画元素 -->
+  <div class="fly-dot" id="flyDot"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
