@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """写入大师级CSS样式"""
-css = """/* ===== 光饼·舒芙蕾·油柑茶 — 大师级UI ===== */
+css = """/* ===== 吃光饼·榴莲芝士饼·油柑汁 — 大师级UI ===== */
 :root {
   --pink: #E8849C; --pink-deep: #C85A78; --pink-light: #FFF0F3; --pink-bg: #FFF5F7;
   --orange: #F0A060; --orange-light: #FFF5EE;
